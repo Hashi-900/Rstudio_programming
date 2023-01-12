@@ -1,0 +1,156 @@
+---
+title: "Tidytuesday"
+author: "Muhammed Farah Hashi"
+date: "`r Sys.time()`"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+## Tidy Tuesday Data
+
+### Loading packages and data
+
+```{r}
+library(tidyverse)
+library(tidytuesdayR)
+library(scales)
+library(ggthemes)
+
+tt <- tt_load(2020, week = 22)
+
+tt
+tt$cocktails %>% 
+  glimpse()
+
+tt$boston_cocktails %>% 
+  glimpse()
+
+boston_cocktails <- tt$boston_cocktails
+```
+
+```{r}
+boston_cocktails %>% 
+  count(name)
+
+boston_cocktails %>% 
+  count(row_id)
+
+boston_cocktails %>% 
+  count(name, row_id)
+```
+
+checking whether there is one to one relationship between name column and row id column.
+
+```{r}
+boston_cocktails %>% 
+  group_by(name) %>% 
+  summarise(ids = n_distinct(row_id)) %>% 
+  filter(ids > 1)
+# There is no id number which is greater than one.
+# it is indicative of one to one relationship and the two columns are the same.
+```
+
+```{r}
+boston_cocktails %>% 
+  count(name) %>% 
+  count(n)
+
+boston_cocktails %>% 
+  group_by(name) %>% 
+  filter(n()==1)
+
+```
+
+```{r}
+boston_cocktails %>% 
+  group_by(name) %>% 
+  filter(n()==6)
+```
+
+```{r}
+boston_cocktails %>% 
+  count(measure, sort = TRUE)
+```
+
+```{r}
+sizes <-boston_cocktails %>% 
+  filter(str_detect(measure, "oz")) %>% 
+  filter(!str_detect(ingredient, "bitters")) %>% 
+  mutate(oz = str_replace(measure, " oz", " ")) %>% 
+  mutate(oz = str_replace(oz, " ?1/2", ".5 ")) %>% 
+  mutate(oz = str_replace(oz, " ?1/4", ".5")) %>% 
+  mutate(oz = str_replace(oz, " ? ?3/4", ".75")) %>% 
+  mutate(oz = str_replace(oz, " ?1/3", ".33")) %>% 
+  mutate(oz = str_replace(oz, " ?2/3", ".66")) %>% 
+  mutate(oz = as.numeric(oz))
+```
+
+```{r}
+sizes %>% 
+  filter(oz > 3)
+```
+
+```{r}
+total_size <-sizes %>% 
+  group_by(name) %>% 
+  summarise(n = n(),
+            oz = sum(oz)) 
+
+total_size %>% 
+  filter(oz < 20) %>% 
+  ggplot(aes(oz)) +
+  geom_histogram(binwidth = 0.5)
+```
+
+```{r}
+total_size %>% 
+  filter(oz > 6) %>% 
+  semi_join(boston_cocktails, ., by = 'name')
+```
+
+```{r}
+sizes %>% 
+  group_by(ingredient= tolower(ingredient)) %>% 
+  summarise(n = n(),
+            oz = mean(oz)) %>% 
+  filter(n > 5) %>% 
+  arrange(desc(oz))
+
+```
+
+```{r}
+boston_cocktails %>% 
+  count(tolower(ingredient), sort = TRUE) %>% 
+  head(20)
+```
+
+```{r}
+ingredients <- tribble(
+  ~ ingredient ,  ~ standard_name,
+  "fresh lemon juice", "lemon jiuce",
+  "fresh lime juice",  "lime jiuce",
+  "lemon juice", "lemon jiuce",
+  "juice of a lemon", "lemon jiuce",
+  "juice of a lime", "lime jiuce",
+)
+
+```
+
+```{r}
+boston_cocktails <- boston_cocktails %>% 
+  mutate(ingredient = tolower(ingredient))
+
+ingredient_changes <-boston_cocktails %>% 
+  select(row_id,ingredient_number, ingredient) %>% 
+  right_join(ingredients) %>% 
+  select(row_id,ingredient_number, ingredient = standard_name)
+```
+
+```{r}
+boston_cocktails %>% 
+  rows_update(ingredient_changes, by = c("row_id", "ingredient_number")) %>% 
+  count(ingredient, sort = TRUE) %>% 
+  head(20)
+```
