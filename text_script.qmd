@@ -126,6 +126,8 @@ boston_cocktails %>%
   head(20)
 ```
 
+### More data cleaning 
+
 ```{r}
 ingredients <- tribble(
   ~ ingredient ,  ~ standard_name,
