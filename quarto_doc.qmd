@@ -1,0 +1,91 @@
+---
+title: "TidyTuesdayQuarto"
+author: "Muhammed F Hashi"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+## Data Visualization with R
+
+### Loading packages and data
+
+```{r}
+library(tidyverse)
+library(gapminder)
+library(scales)
+
+theme_set(theme_minimal(base_size = 12))
+```
+
+First we will do exploratory data analysis which includes looking at the number of rows and columns and data types of our features. then are going to do data manipulation and cleaning if need be before we calculation and measuring anything.
+
+```{r}
+gapminder |> 
+  glimpse()
+
+gapminder |> 
+  count(year)
+
+gapminder |> 
+  filter(year == 2007) |> 
+  summarise(meana_lifeExpectancy = mean(lifeExp),
+            mean_GdpPercapita = mean(gdpPercap), .by  = continent)
+
+
+gapminder |> 
+  #filter(year == 2007) |> 
+  summarise(meana_lifeExpectancy = mean(lifeExp),
+            mean_GdpPercapita = mean(gdpPercap), .by  = continent)
+
+```
+
+```{r}
+
+gapminder |> 
+  ggplot(aes(gdpPercap, lifeExp, col = continent)) +
+  geom_point() + scale_x_log10() +
+  scale_color_brewer(palette = 'Dark2') +
+  theme(
+    legend.position = 'top'
+  ) +
+  labs(
+    title = 'The Association between GDP per Capita and Life Expectancy colored with different continents',
+    x = 'GDP per Capita',
+    y = 'Life Expectancy'
+  )
+
+```
+
+If we see, the scatter plot alone we can notice that there is positive relationship between the GDP per capita and life expectancy. it also show that countries in African continent lie mostly on botton half of the plot which indicates that they have lower GDP per capita and lower life expectancy than most other continents.
+
+```{r}
+gapminder |> 
+  summarise(
+    mean_lifeExpactancy = mean(lifeExp),
+    .by = c(year, continent)
+  ) |> 
+  ggplot(aes(year, mean_lifeExpactancy, col = continent)) +
+  geom_line() + geom_point() +
+  labs(
+    title = 'The line plot shows how life expectancy changes over the years in each continent',
+    y = 'Average Life Expectancy',
+    x = ""
+  ) +
+  theme(
+    legend.position = 'bottom'
+  )
+```
+
+```{r}
+gapminder |> 
+  filter(country %in% c('Somalia', 'Kenya', 'Zambia')) |> 
+  ggplot(aes(year, lifeExp, col = country)) +
+  geom_line() + geom_point() +
+  labs(
+    title = 'Life Expectancy of three different countriies over the years',
+    y = 'Life Expectancy',
+    x = ''
+  )
+```
