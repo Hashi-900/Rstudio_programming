@@ -249,6 +249,47 @@ $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.11
 <p><img src="quarto_doc_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">'Europe'</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(country, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30 × 6
+   country                continent  year lifeExp      pop gdpPercap
+   &lt;fct&gt;                  &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+ 1 Albania                Europe     1952    55.2  1282697     1601.
+ 2 Austria                Europe     1952    66.8  6927772     6137.
+ 3 Belgium                Europe     1952    68    8730405     8343.
+ 4 Bosnia and Herzegovina Europe     1952    53.8  2791000      974.
+ 5 Bulgaria               Europe     1952    59.6  7274900     2444.
+ 6 Croatia                Europe     1952    61.2  3882229     3119.
+ 7 Czech Republic         Europe     1952    66.9  9125183     6876.
+ 8 Denmark                Europe     1952    70.8  4334000     9692.
+ 9 Finland                Europe     1952    66.6  4090500     6425.
+10 France                 Europe     1952    67.4 42459667     7030.
+11 Germany                Europe     1952    67.5 69145952     7144.
+12 Greece                 Europe     1952    65.9  7733250     3531.
+13 Hungary                Europe     1952    64.0  9504000     5264.
+14 Iceland                Europe     1952    72.5   147962     7268.
+15 Ireland                Europe     1952    66.9  2952156     5210.
+16 Italy                  Europe     1952    65.9 47666000     4931.
+17 Montenegro             Europe     1952    59.2   413834     2648.
+18 Netherlands            Europe     1952    72.1 10381988     8942.
+19 Norway                 Europe     1952    72.7  3327728    10095.
+20 Poland                 Europe     1952    61.3 25730551     4029.
+21 Portugal               Europe     1952    59.8  8526050     3068.
+22 Romania                Europe     1952    61.0 16630000     3145.
+23 Serbia                 Europe     1952    58.0  6860147     3581.
+24 Slovak Republic        Europe     1952    64.4  3558137     5075.
+25 Slovenia               Europe     1952    65.6  1489518     4215.
+26 Spain                  Europe     1952    64.9 28549870     3834.
+27 Sweden                 Europe     1952    71.9  7124673     8528.
+28 Switzerland            Europe     1952    69.6  4815000    14734.
+29 Turkey                 Europe     1952    43.6 22235677     1969.
+30 United Kingdom         Europe     1952    69.2 50430000     9980.</code></pre>
+</div>
+</div>
 </section>
 </section>
 
