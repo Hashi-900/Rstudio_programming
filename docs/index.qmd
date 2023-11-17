@@ -101,3 +101,14 @@ gapminder %>%
   filter(country ==  'Somalia') %>% 
   print(n = 12)
 ```
+
+```{r}
+
+gapminder %>% 
+  filter(country ==  'Somalia') %>% 
+  ggplot(aes(year, gdpPercap)) + geom_point() +
+  geom_line() +
+  labs(
+    title = 'The GDP per Capita of Somalia over the years'
+  )
+```
