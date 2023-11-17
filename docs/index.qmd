@@ -2,6 +2,8 @@
 title: "testing_quarto"
 author: "Muhammed F Hashi"
 format: html
+execute: 
+  warning: false
 editor: visual
 ---
 
@@ -79,7 +81,7 @@ gapminder |>
 gapminder |> 
   filter(country %in% c('Somalia', 'Kenya', 'Zambia')) |> 
   ggplot(aes(year, lifeExp, col = country)) +
-  geom_line() + geom_point() +
+  geom_point() + geom_line() +
   labs(
     title = 'Life Expectancy of three different countriies over the years',
     y = 'Life Expectancy',
