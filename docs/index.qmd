@@ -95,3 +95,9 @@ gapminder |>
   distinct(country, .keep_all = TRUE) |> 
   print(n = 30)
 ```
+
+```{r}
+gapminder %>% 
+  filter(country ==  'Somalia') %>% 
+  print(n = 12)
+```
