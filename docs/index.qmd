@@ -1,10 +1,8 @@
 ---
-title: "TidyTuesdayQuarto"
+title: "testing_quarto"
 author: "Muhammed F Hashi"
 format: html
 editor: visual
-editor_options: 
-  chunk_output_type: console
 ---
 
 ## Data Visualization with R
@@ -42,7 +40,6 @@ gapminder |>
 ```
 
 ```{r}
-
 gapminder |> 
   ggplot(aes(gdpPercap, lifeExp, col = continent)) +
   geom_point() + scale_x_log10() +
