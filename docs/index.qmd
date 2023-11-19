@@ -1,5 +1,5 @@
 ---
-title: "testing_quarto"
+title: "Introduction to Tidyverse"
 author: "Muhammed F Hashi"
 format: html
 execute: 
@@ -109,6 +109,10 @@ gapminder %>%
   ggplot(aes(year, gdpPercap, col = country)) + geom_point() +
   geom_line() +
   labs(
-    title = 'GDP per Capita comparison between Somalia and Tanzania over the years'
-  )
+    title = 'GDP per Capita comparison between Somalia and Tanzania over the years',
+    color = 'Country'
+  ) +
+  theme(
+    legend.position = 'bottom'
+  ) 
 ```
